@@ -1,3 +1,13 @@
+@font-face {
+	font-family: 'typicons';
+	src:url('../fonts/typicons/typicons.eot');
+	src:url('../fonts/typicons/typicons.eot?#iefix') format('embedded-opentype'),
+		url('../fonts/typicons/typicons.ttf') format('truetype'),
+		url('../fonts/typicons/typicons.woff') format('woff'),
+		url('../fonts/typicons/typicons.svg#typicons') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
 
 html, body, .perspective {
 	width: 100%;
@@ -323,9 +333,9 @@ html, body, .perspective {
 	transform: translateZ(-1800px) translateX(-50%) rotateY(45deg);
 }
 
-/*.no-csstransforms3d .effect-rotateleft.animate .container {
+.no-csstransforms3d .effect-rotateleft.animate .container {
 	left: -75%;
-}*/
+}
 
 .effect-rotateleft .outer-nav a {
 	opacity: 0;
@@ -590,7 +600,7 @@ html, body, .perspective {
 
 /* Media Queries */
 @media screen and (max-width: 77em) {
-
+	
 	.outer-nav.top {
 		top: 15%;
 	}
@@ -609,7 +619,7 @@ html, body, .perspective {
 	.outer-nav.bottom {
 		bottom: 5%;
 	}
-
+	
 	.outer-nav.horizontal {
 		font-size: 1.7em;
 		width: 6.2em;

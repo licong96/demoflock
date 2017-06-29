@@ -34,8 +34,8 @@
 		},
 		transEndEventName = transEndEventNames[ Modernizr.prefixed( 'transition' ) ],
 		docscroll = 0,
-		// click event (if mobile use touchstart)
-		clickevent = mobilecheck() ? 'touchstart' : 'click';
+		// click event (if mobile use touchstart) 'touchstart' : 'click'
+		clickevent = mobilecheck() ? 'click' : 'click';
 
 	function init() {
 		var showMenu = document.getElementById( 'showMenu' ),
