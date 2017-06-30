@@ -61,16 +61,11 @@
 </template>
 
 <script>
-import Waves from '../../static/js/waves.min.js'
-
 export default {
   data () {
     return {
       active: 1
     }
-  },
-  created () {
-    Waves.displayEffect()      // 点击效果
   },
   methods: {
     fntab (index) {
@@ -82,7 +77,6 @@ export default {
 
 <style lang="scss" scoped>
 @import "../scss/style";
-@import "../../static/css/waves.min.css";
   .home{
     background-color: $color6;
   }
@@ -92,6 +86,7 @@ export default {
     background-color: #fff;
     padding: .4rem 0;
     .figure{
+      margin-top: .5rem;
       img{
         width: 1.07rem;
         height: 1.07rem;
