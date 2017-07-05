@@ -3,12 +3,12 @@
     <!-- 头部 -->
     <header class="header">
       <figure class="figure">
-        <img src="../assets/logo.png" alt="">
-        <p>用户名</p>
+        <img :src="userData.headimgurl" alt="">
+        <p>{{userData.nickname}}</p>
+        <span>{{userData.sex}}</span>
       </figure>
       <div class="btn">
-        <button type="button" class="waves-effect waves-button waves-float waves-light">创建群</button>
-        <span class="waves-effect waves-block">项目名称</span>
+        <my-picker></my-picker>
       </div>
     </header>
     <!-- 余额 -->
@@ -16,7 +16,7 @@
       <div class="moany-warp">
         <p>余额（元）</p>
         <div class="text">0.00元</div>
-        <span class="waves-effect waves-block waves-light">提现</span>
+        <span class="waves-effect waves-block waves-light" @click="withdraw">提现</span>
       </div>
     </section>
     <!-- 我的群 -->
@@ -61,22 +61,49 @@
 </template>
 
 <script>
+import MyPicker from '../components/Picker'
+
 export default {
   data () {
     return {
-      active: 1
+      active: 1,
+      userData: {}
     }
   },
+  created () {
+    this.fetchData()
+  },
   methods: {
-    fntab (index) {
+    fntab (index) {     // tab切换
       this.active = index
+    },
+    fetchData () {    // 获取数据
+      var _this = this;
+      this.axios.get('userinfo.php')
+        .then(function (response) {
+          if (response.data) {
+            _this.userData = response.data
+          } else {
+            window.location.href = 'oauth2.php'
+          }
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
+    },
+    withdraw () {
+      this.swal('暂无','eror')
     }
+  },
+  components: {
+    MyPicker
   }
 }
 </script>
 
 <style lang="scss" scoped>
 @import "../scss/style";
+
   .home{
     background-color: $color6;
   }
@@ -102,15 +129,6 @@ export default {
       width: 60%;
       margin: .27rem auto 0 auto;
       font-size: .43rem;
-      button{
-        display: block;
-        margin: 0;
-        padding: .6em 1em;
-        width: 100%;
-        background-color: $btnColor9;
-        color: $color;
-        font-size: .43rem;
-      }
       span{
         display: block;
         margin-top: .8rem;

@@ -45,7 +45,12 @@ export default {
 
 <style lang="scss">
 @import "./scss/style";
-@import "../static/css/waves.min.css";
+@import "./assets/css/flexible.css";
+@import "./assets/css/demo.css";
+@import "./assets/css/component.css";
+@import "./assets/css/waves.min.css";
+@import "./assets/css/sweetalert.css";
+
   html,body{
     font-family: "Helvetica Neue", Helvetica, STHeiTi, sans-serif;
   }
@@ -75,6 +80,18 @@ export default {
       margin: .8rem 0 .8rem 0;
       font-size: .43rem;
       font-weight: 700;
+    }
+  }
+
+  .picker-choose{
+    span{
+      font-size: .43rem;
+    }
+    .confirm{
+      color: $btnColor9 !important;
+    }
+    .picker-title{
+      font-size: .48rem !important;
     }
   }
 </style>

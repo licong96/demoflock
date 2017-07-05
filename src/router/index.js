@@ -2,9 +2,9 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '@/page/Home'
 import Addflock from '@/page/Addflock'
-import Withdraw from '@/components/Withdraw'
-import Operation from '@/components/Operation'
-import Feedback from '@/components/Feedback'
+import Withdraw from '@/page/Withdraw'
+import Operation from '@/page/Operation'
+import Feedback from '@/page/Feedback'
 
 Vue.use(Router)
 
