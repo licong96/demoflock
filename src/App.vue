@@ -6,7 +6,9 @@
 				<div class="main clearfix">
 					<div class="column">
 						<button id="showMenu" class="btn-nav"><i class="iconfont icon-daohang"></i></button>
+            <transition name="component-fade" mode="out-in">
             <router-view></router-view>
+            </transition>
 					</div>
 				</div><!-- /main -->
 			</div><!-- wrapper -->
@@ -14,8 +16,8 @@
     <nav class="outer-nav left vertical" @click="coutert">
       <router-link to="/">首页</router-link>
       <router-link to="/withdraw">提现</router-link>
-      <router-link to="/addflock">建群</router-link>
-      <router-link to="/operation">加群操作</router-link>
+      <router-link to="/operation">加群</router-link>
+      <router-link to="/help">帮助中心</router-link>
       <router-link to="/feedback">意见反馈</router-link>
     </nav>
 	</div><!-- /perspective -->
@@ -93,5 +95,17 @@ export default {
     .picker-title{
       font-size: .48rem !important;
     }
+  }
+  // alert提示颜色
+  .sweet-alert .confirm{
+    background-color: $btnColor10 !important;
+  }
+
+  // 组件过渡
+  .component-fade-enter-active, .component-fade-leave-active {
+    transition: opacity .3s ease;
+  }
+  .component-fade-enter, .component-fade-leave-to{
+    opacity: 0;
   }
 </style>

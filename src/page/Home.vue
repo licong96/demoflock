@@ -5,10 +5,11 @@
       <figure class="figure">
         <img :src="userData.headimgurl" alt="">
         <p>{{userData.nickname}}</p>
-        <span>{{userData.sex}}</span>
+        <span v-if="userData.sex==1">男</span>
+        <span v-else>女</span>
       </figure>
       <div class="btn">
-        <my-picker></my-picker>
+        <my-picker :picker="userData"></my-picker>
       </div>
     </header>
     <!-- 余额 -->
@@ -23,35 +24,29 @@
     <section class="flock">
       <h3>我的群</h3>
       <nav>
-        <span @click="fntab(1)" :class="{active: active===1}">全部</span>
-        <span @click="fntab(2)" :class="{active: active===2}">群主</span>
-        <span @click="fntab(3)" :class="{active: active===3}">我的申请</span>
+        <span @click="fntab(1)" :class="{active: active===1}">我加的群</span>
+        <span @click="fntab(2)" :class="{active: active===2}">我建的群</span>
       </nav>
       <div class="flock-center">
         <div class="list" v-show="active===1" key="list1">
           <ul :class="{active: active===1}">
-            <li v-for="li in 5">
-              <span class="title">群名称</span>
-              <span class="number">4人</span>
-              <span class="btn"><button type="button">进入</button></span>
+            <li v-for="item in join">
+              <span class="title">{{item.gname}}</span>
+              <span class="number">状态</span>
+              <router-link :to="{ path: '/myaddgroup', query: { id: item.id }}">
+                <span class="btn"><button type="button">进入</button></span>
+              </router-link>
             </li>
           </ul>
         </div>
         <div class="list" v-show="active===2" key="list2">
           <ul :class="{active: active===2}">
-            <li>
-              <span class="title">我的群</span>
-              <span class="number">1人</span>
-              <span class="btn"><button type="button">查看</button></span>
-            </li>
-          </ul>
-        </div>
-        <div class="list" v-show="active===3" key="list3">
-          <ul :class="{active: active===3}">
-            <li>
-              <span class="title">待支付</span>
-              <span class="number">1人</span>
-              <span class="btn"><button type="button">付款</button></span>
+            <li v-for="item in create">
+              <span class="title">{{item.gname}}</span>
+              <span class="number"></span>
+              <router-link :to="{ path: '/mybuildgroup', query: { id: item.id }}">
+                <span class="btn"><button type="button">查看</button></span>
+              </router-link>
             </li>
           </ul>
         </div>
@@ -67,7 +62,9 @@ export default {
   data () {
     return {
       active: 1,
-      userData: {}
+      userData: {},
+      join: [],
+      create: []
     }
   },
   created () {
@@ -77,22 +74,40 @@ export default {
     fntab (index) {     // tab切换
       this.active = index
     },
-    fetchData () {    // 获取数据
-      var _this = this;
+    fetchData () {    // 判断是否登录，获取微信名称和头像
+      var _this = this
       this.axios.get('userinfo.php')
         .then(function (response) {
           if (response.data) {
             _this.userData = response.data
+            _this.getLIstData()     // 获取群列表
           } else {
             window.location.href = 'oauth2.php'
           }
         })
         .catch(function (error) {
-          console.log(error)
+          _this.swal('网络错误', error, 'error')
+        })
+    },
+    getLIstData () {    // 获取群列表
+      var _this = this
+      this.axios.get('wxgroupapi.php?type=mygrouplist')
+        .then(function (response) {
+          if (response.data.status === 1) {
+            _this.join = response.data.join
+            _this.create = response.data.create
+            alert(JSON.stringify(_this.join))
+            alert(JSON.stringify(_this.create))
+          } else {
+            alert('什么都没有')
+          }
+        })
+        .catch(function (error) {
+          _this.swal('网络错误', error, 'error')
         })
     },
     withdraw () {
-      this.swal('暂无','eror')
+      this.swal('暂时不能提现', '', 'error')
     }
   },
   components: {
@@ -115,14 +130,20 @@ export default {
     .figure{
       margin-top: .5rem;
       img{
-        width: 1.07rem;
-        height: 1.07rem;
-        border-radius: 1.07rem;
+        width: 1.2rem;
+        height: 1.2rem;
+        border-radius: 1.2rem;
         border: 1px solid #eee;
       }
       p{
         padding-top: .03rem;
+        font-size: .37rem;
+        font-size: .4rem;
+        color: $txtColor1;
+      }
+      span{
         font-size: .32rem;
+        color: $txtColor2;
       }
     }
     .btn{
@@ -177,6 +198,7 @@ export default {
     padding: .4rem .4rem 1rem .4rem;
     background-color: #fff;
     text-align: center;
+    overflow: hidden;
     h3{
       font-size: .43rem;
       color: $txtColor2;
@@ -221,15 +243,19 @@ export default {
           display: flex;
           margin-bottom: .53rem;
           span{
-            flex: 1;
             text-align: center;
             display: block;
           }
           .title{
+            flex: 4;
             color: $txtColor1;
           }
           .number{
+            flex: 1;
             color: $txtColor2;
+          }
+          a{
+            flex: 2;
           }
           .btn{
             button{

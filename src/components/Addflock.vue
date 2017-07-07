@@ -1,30 +1,30 @@
 <template lang="html">
   <div class="addflock">
     <section class="help">
-      <h3>1.长按复制下方“群绑定码”</h3>
-      <input type="text" name="" value="12345" readonly>
+      <h3>1.添加“蚂蚁众投机器人”为好友</h3>
+      <p class="code"><img src="../../static/img/greet.jpg" alt=""></p>
     </section>
     <section class="help">
-      <h3>2.添加“蚂蚁众投机器人”为好友</h3>
-      <p class="code"><img src="https://qr.api.cli.im/qr?data=http%253A%252F%252F192.168.1.117%253A8080%252F%2523%252Faddflock%253Fid%253D448&level=H&transparent=false&bgcolor=%23ffffff&forecolor=%23000000&blockpixel=12&marginblock=1&logourl=&size=280&kid=cliim&key=ce8c8f7a9f0baad077763a72d914ba86" alt=""></p>
+      <h3>2.长按复制下方“群绑定码”</h3>
+      <input type="text" v-model="binding" readonly>
     </section>
     <section class="help">
       <h3>3.您需要自己创建一个群</h3>
-      <h3>然后把“蚂蚁众投机器人”拉入群中，再将群转让给"蚂蚁众投机器人</h3>
-      <h3>最后在群里输入第一步的“群绑定码”</h3>
+      <h3>然后把“蚂蚁众投机器人”拉入群中，再将群转让给“蚂蚁众投机器人”</h3>
+      <h3>最后在群里输入第2步的“群绑定码”</h3>
     </section>
   </div>
 </template>
 
 <script>
-
 export default {
   data () {
     return {
+      binding: ''
     }
   },
   created () {
-    console.log(this.$route.query.id)
+    this.binding = 'group' + this.$route.query.id
   }
 }
 </script>
@@ -54,6 +54,7 @@ export default {
       }
       .code{
         max-width: 6.67rem;
+        min-height: 6.67rem;
         margin: 0 auto;
         padding: .13rem;
         border: 1px solid rgba(0,0,0,.1);
